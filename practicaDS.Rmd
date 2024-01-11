@@ -12,6 +12,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Data Science
 ### Pregunta 1
 
 De las siguientes preguntas, clasifica cada una como descriptiva, exploratoria, inferencia, predictiva o causal, y razona brevemente (una
