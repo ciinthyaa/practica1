@@ -13,9 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Data Science
+
 ### Pregunta 1
 
-De las siguientes preguntas, clasifica cada una como descriptiva, exploratoria, inferencia, predictiva o causal, y razona brevemente (una
+De las siguientes preguntas, clasifica cada una como descriptiva,
+exploratoria, inferencia, predictiva o causal, y razona brevemente (una
 frase) el por qué:
 
 1.  Dado un registro de vehículos que circulan por una autopista,
@@ -24,9 +26,9 @@ frase) el por qué:
     peajes, ¿Cuántos vehículos tenemos por tipo? ¿Cuál es el tipo más
     frecuente? ¿De qué países tenemos más vehículos?
 
-    **Respuesta:** Pregunta exploratoria. Porque se
-    realiza un análisis de diversa información obtenida sobre los
-    vehículos que circulan en una autopista.
+    **Respuesta:** Pregunta exploratoria. Porque se realiza un análisis
+    de diversa información obtenida sobre los vehículos que circulan en
+    una autopista.
 
 2.  Dado un registro de visualizaciones de un servicio de
     video-on-demand, donde disponemos de los datos del usuario, de la
@@ -34,8 +36,8 @@ frase) el por qué:
     película, queremos saber ¿Hay alguna preferencia en cuanto a género
     literario según los usuarios y su rango de edad?
 
-    **Respuesta:** Pregunta descriptiva. Porque el
-    conjunto de datos busca encontrar información. 
+    **Respuesta:** Pregunta descriptiva. Porque el conjunto de datos
+    busca encontrar información.
 
 3.  Dado un registro de peticiones a un sitio web, vemos que las
     peticiones que provienen de una red de telefonía concreta
@@ -54,8 +56,73 @@ frase) el por qué:
     asignado a un o diversos grupos
 
     **Respuesta:** Pregunta inferencial. Porque la tendencia o el
-    comportamiento de compras del usuario permite clasificarlo a un grupo o varios.
+    comportamiento de compras del usuario permite clasificarlo a un
+    grupo o varios.
 
+### Pregunta 2
 
+Considera el siguiente escenario:
 
+Sabemos que un usuario de nuestra red empresarial ha estado usando esta
+para fines no relacionados con el trabajo, como por ejemplo tener un
+servicio web no autorizado abierto a la red (otros usuarios tienen
+servicios web activados y autorizados). No queremos tener que rastrear
+los puertos de cada PC, y sabemos que la actividad puede haber cesado.
+Pero podemos acceder a los registros de conexiones TCP de cada máquina
+de cada trabajador (hacia donde abre conexión un PC concreto). Sabemos
+que nuestros clientes se conectan desde lugares remotos de forma
+legítima, como parte de nuestro negocio, y que un trabajador puede haber
+habilitado temporalmente servicios de prueba. Nuestro objetivo es
+reducir lo posible la lista de posibles culpables, con tal de
+explicarles que por favor no expongan nuestros sistemas sin permiso de
+los operadores o la dirección.
 
+Explica con detalle cómo se podría proceder al análisis y resolución del
+problema mediante Data Science, indicando de donde se obtendrían los
+datos, qué tratamiento deberían recibir, qué preguntas hacerse para
+resolver el problema, qué datos y gráficos se obtendrían, y cómo se
+comunicarían estos.
+
+**Respuesta:** Se obtendrían los datos del registro historial
+
+## Introduccion a R
+
+### Pregunta 1
+
+Una vez cargado el Dataset a analizar, comprobando que se cargan las
+IPs, el Timestamp, la Petición (Tipo, URL y Protocolo), Código de
+respuesta, y Bytes de reply.
+
+```         
+colnames(epa_http)<-c("IPs","Timestamp","Tipo","URL","Protocolo","Código de respuesta","Bytes")
+```
+
+-   Cuales son las dimensiones del dataset cargado (número de filas y
+    columnas)
+
+    ```         
+    > dim(epa_http) 
+    [1] 47748     7
+    ```
+
+-   Valor medio de la columna Bytes
+
+    ```         
+     mean(epa_http$Bytes) 
+     [1] 6531.457
+    ```
+
+Pregunta 2:
+De las diferentes IPs de origen accediendo al servidor, ¿cuantas
+pertenecen a una IP
+claramente educativa (que contenga ".edu")?
+
+```         
+> sum(str_detect(epa_http$IPs, ".edu"))
+[1] 6539
+```
+
+Pregunta 3:
+De todas las peticiones recibidas por el servidor cual es la hora en la
+que hay mayor volumen
+de peticiones HTTP de tipo "GET"?
