@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Pregunta 1
 
 De las siguientes preguntas, clasifica cada una como descriptiva, exploratoria, inferencia, predictiva o causal, y razona brevemente (una
-frase) el porqué:
+frase) el por qué:
 
 1.  Dado un registro de vehículos que circulan por una autopista,
     disponemos de su marca y modelo, país de matriculación, y tipo de
@@ -24,8 +24,8 @@ frase) el porqué:
     frecuente? ¿De qué países tenemos más vehículos?
 
     **Respuesta:** Pregunta exploratoria. Porque se
-    realiza un ánalisis de diversa información obtenida sobre los
-    vehículos que circulan en una autopista
+    realiza un análisis de diversa información obtenida sobre los
+    vehículos que circulan en una autopista.
 
 2.  Dado un registro de visualizaciones de un servicio de
     video-on-demand, donde disponemos de los datos del usuario, de la
@@ -34,7 +34,7 @@ frase) el porqué:
     literario según los usuarios y su rango de edad?
 
     **Respuesta:** Pregunta descriptiva. Porque el
-    conjunto de datos busca encontrar información 
+    conjunto de datos busca encontrar información. 
 
 3.  Dado un registro de peticiones a un sitio web, vemos que las
     peticiones que provienen de una red de telefonía concreta
@@ -53,7 +53,7 @@ frase) el porqué:
     asignado a un o diversos grupos
 
     **Respuesta:** Pregunta inferencial. Porque la tendencia o el
-    comportamiento de compras del usuario permite clasificarlo a un grupo
+    comportamiento de compras del usuario permite clasificarlo a un grupo o varios.
 
 
 
