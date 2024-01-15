@@ -455,21 +455,35 @@ puertos como de servicios ilegítimos.</p>
 </div>
 <div id="introducción-a-r" class="section level2">
 <h2>Introducción a R</h2>
+<p>Antes de proceder a resolver las preguntas, primero cargamos el
+archivo haciendo uso del asistante visual de Rstudio, y con esta misma
+herramienta separamos los datos en columnas y filas, y cambiamos el
+formato de los datos a numérico en la ultima columna del documento
+cargado.</p>
+<p>Asignamos el nombre a las columnas con el siguiente código:</p>
+<pre class="r"><code>colnames (epa_http) &lt;- c(&quot;IPs&quot;, &quot;Timestamp&quot;, &quot;Tipo&quot;, &quot;URL&quot;, &quot;Protocolo&quot;, &quot;Código de respuesta&quot;, &quot;Bytes&quot;)</code></pre>
 <div id="pregunta-1-1" class="section level3">
 <h3>Pregunta 1</h3>
 <p>Una vez cargado el Dataset a analizar, comprobando que se cargan las
 IPs, el Timestamp, la Petición (Tipo, URL y Protocolo), Código de
 respuesta, y Bytes de reply.</p>
-<pre><code>colnames(epa_http)&lt;-c(&quot;IPs&quot;,&quot;Timestamp&quot;,&quot;Tipo&quot;,&quot;URL&quot;,&quot;Protocolo&quot;,&quot;Código de respuesta&quot;,&quot;Bytes&quot;)</code></pre>
-<ul>
-<li><p>Cuáles son las dimensiones del dataset cargado (número de filas y
-columnas)</p>
-<pre><code>&gt; dim(epa_http) 
-[1] 47748     7</code></pre></li>
+<p>Para responder el literal 1 y 2, haremos uso de funciones, para el
+literal 1 la función dim y para el literal 2 la funcion mean.</p>
+<ol style="list-style-type: decimal">
+<li><p>¿Cuáles son las dimensiones del dataset cargado (número de filas
+y columnas)?</p>
+<pre class="r"><code>dim(epa_http)</code></pre>
+<p>Existen 47748 columnas y 7 filas</p></li>
 <li><p>Valor medio de la columna Bytes</p>
-<pre><code> mean(epa_http$Bytes) 
- [1] 6531.457</code></pre></li>
-</ul>
+<p>Para poder realizar esta pregunta primero debemos asignar valores de
+0 a aquellas celdas que no tienen valores asignados en la columna
+Bytes</p>
+<pre class="r"><code>epa_http2$Bytes[ is.na (epa_http2$Bytes)] &lt;- 0</code></pre>
+<p>Después hacemos uso de la función y ya podemos obtener el valor
+medio.</p>
+<pre class="r"><code>mean(epa_http$Bytes)</code></pre>
+<p>El valor medio es de 6531.457</p></li>
+</ol>
 </div>
 <div id="pregunta-2-1" class="section level3">
 <h3>Pregunta 2</h3>

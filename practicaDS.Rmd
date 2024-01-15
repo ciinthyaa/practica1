@@ -140,11 +140,11 @@ literal 1 la función dim y para el literal 2 la funcion mean.
 1.  ¿Cuáles son las dimensiones del dataset cargado (número de filas y
     columnas)?
 
-    > ``` r
-    > dim(epa_http)
-    > ```
-    >
-    > *Respuesta:* Existen 47748 columnas y 7 filas
+    ``` r
+    dim(epa_http)
+    ```
+
+    Existen 47748 columnas y 7 filas
 
 2.  Valor medio de la columna Bytes
 
@@ -163,7 +163,7 @@ literal 1 la función dim y para el literal 2 la funcion mean.
     mean(epa_http$Bytes)
     ```
 
-    *Respuesta:* El valor medio es de 6531.457
+    El valor medio es de 6531.457
 
 ### Pregunta 2
 
