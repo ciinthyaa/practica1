@@ -42,7 +42,30 @@ Sabemos que un usuario de nuestra red empresarial ha estado usando esta para fin
 
 Explica con detalle cómo se podría proceder al análisis y resolución del problema mediante Data Science, indicando de donde se obtendrían los datos, qué tratamiento deberían recibir, qué preguntas hacerse para resolver el problema, qué datos y gráficos se obtendrían, y cómo se comunicarían estos.
 
-**Respuesta:** Se obtendrían los datos del registro historial
+**Respuesta:** ¿Que necesitamos saber/conocer?¿Cuál es el usuario culpable?¿Cómo lo hizo?¿Qué datos tenemos?
+- Los registros de conexiones TCP de cada máquina de cada trabajador.
+- Conocemos que clientes se conectan desde lugares remotos de forma legítima.
+- Sabemos cuáles son los servicios legítimos que tenemos activos.
+- Los puertos que se mantienen como lícitos para el uso de los servicios.
+
+Acciones:
+
+- Explorar los datos que tenemos:
+ - Logs de cada máquina.
+ - Servicios y puertos permitidos.
+ - Listado de usuarios de la empresa.
+ - Dominios legítimos en los cuales se puede mantener comunicación.
+- Normalizar, adecuar o etiquetar los datos.
+- Comparar los servicios legítimos con los que estuvieron o están habilitados en los logs.
+- Comparar los puertos activos que están marcados como legítimos.
+- Ir generando una tabla con los usuarios cuya comparación indique que existió una violación de servicios.
+- Generar graficas que muestren las comparaciones antes mencionadas, en las cuales se debe visualizar los servicios y puertos ilegítimos. 
+- Generar una gráfica que muestre la totalidad de los usuarios y el porcentaje de usuarios que hizo uso de servicios no autorizados.
+
+Conclusiones y toma de decisiones según los resultados:
+- Analizar si el uso de esos servicios es realmente requerido para los usuarios.
+- Concientizar sobre el uso adecuado de las políticas establecidas en la organización.
+- Implementar políticas que bloqueen el uso tanto de puertos como de servicios ilegítimos.
 
 ## Introducción a R
 
