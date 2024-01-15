@@ -83,20 +83,36 @@ datos, qué tratamiento deberían recibir, qué preguntas hacerse para
 resolver el problema, qué datos y gráficos se obtendrían, y cómo se
 comunicarían estos.
 
-**Respuesta:** ¿Que necesitamos saber/conocer?¿Cuál es el usuario
-culpable?¿Cómo lo hizo?¿Qué datos tenemos? - Los registros de conexiones
-TCP de cada máquina de cada trabajador. - Conocemos que clientes se
-conectan desde lugares remotos de forma legítima. - Sabemos cuáles son
-los servicios legítimos que tenemos activos. - Los puertos que se
-mantienen como lícitos para el uso de los servicios.
+**Respuesta:**
+
+Problemática
+
+-   ¿Que necesitamos saber/conocer?
+
+-   ¿Cuál es el usuario culpable?
+
+-   ¿Cómo lo hizo?
+
+-   ¿Qué datos tenemos?
+
+    -   Los registros de conexiones TCP de cada máquina de cada
+        trabajador.
+
+    -   Conocemos que clientes se conectan desde lugares remotos de
+        forma legítima.
+
+    -   Sabemos cuáles son los servicios legítimos que tenemos activos.
+
+    -   Los puertos que se mantienen como lícitos para el uso de los
+        servicios.
 
 Acciones:
 
 -   Explorar los datos que tenemos:
--   Logs de cada máquina.
--   Servicios y puertos permitidos.
--   Listado de usuarios de la empresa.
--   Dominios legítimos en los cuales se puede mantener comunicación.
+    -   Logs de cada máquina.
+    -   Servicios y puertos permitidos.
+    -   Listado de usuarios de la empresa.
+    -   Dominios legítimos en los cuales se puede mantener comunicación.
 -   Normalizar, adecuar o etiquetar los datos.
 -   Comparar los servicios legítimos con los que estuvieron o están
     habilitados en los logs.
@@ -108,11 +124,16 @@ Acciones:
 -   Generar una gráfica que muestre la totalidad de los usuarios y el
     porcentaje de usuarios que hizo uso de servicios no autorizados.
 
-Conclusiones y toma de decisiones según los resultados: - Analizar si el
-uso de esos servicios es realmente requerido para los usuarios. -
-Concientizar sobre el uso adecuado de las políticas establecidas en la
-organización. - Implementar políticas que bloqueen el uso tanto de
-puertos como de servicios ilegítimos.
+Conclusiones y toma de decisiones según los resultados:
+
+-   Analizar si el uso de esos servicios es realmente requerido para los
+    usuarios.
+
+-   Concientizar sobre el uso adecuado de las políticas establecidas en
+    la organización.
+
+-   Implementar políticas que bloqueen el uso tanto de puertos como de
+    servicios ilegítimos.
 
 ## Introducción a R
 
@@ -187,7 +208,7 @@ sum (str_detect (epa_http$IPs, ".edu"))
 ### Pregunta 3
 
 De todas las peticiones recibidas por el servidor ¿Cuál es la hora en la
-que hay mayor volumen de peticiones HTTP de tipo "GET"?
+qué hay mayor volumen de peticiones HTTP de tipo "GET"?
 
 Para resolver esta pregunta primero observamos que los datos están
 almacenados en día, hora, minutos y segundos, así que para poder usar el
@@ -279,6 +300,10 @@ es igual "/" dado que que es a donde apunta la peticion.
 
 ``` r
 sum(str_equal("/",epa_http$URL))
+```
+
+``` r
+[1] 2382
 ```
 
 ### Pregunta 6
