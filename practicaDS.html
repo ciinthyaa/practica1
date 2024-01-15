@@ -474,15 +474,15 @@ y columnas)?</p>
 filas y columnas.</p>
 <pre class="r"><code>dim(epa_http)</code></pre>
 <pre class="r"><code>[1] 47748     7</code></pre></li>
-<li><p>alor medio de la columna Bytes</p>
+<li><p>Valor medio de la columna Bytes</p>
 <p>Para poder realizar esta pregunta primero debemos asignar valores de
 0 a aquellas celdas que no tienen valores asignados en la columna
 Bytes</p>
-<pre class="r"><code>epa_http2$Bytes[ is.na (epa_http2$Bytes)] &lt;- 0</code></pre>
+<pre class="r"><code>epa_http$Bytes[ is.na (epa_http$Bytes)] &lt;- 0</code></pre>
 <p>Después hacemos uso de la función mean y ya podemos obtener el valor
 medio.</p>
 <pre class="r"><code>mean(epa_http$Bytes)</code></pre>
-<p>El valor medio es de 6531.457</p></li>
+<pre class="r"><code>[1] 6531.457</code></pre></li>
 </ol>
 </div>
 <div id="pregunta-2-1" class="section level3">
@@ -490,33 +490,35 @@ medio.</p>
 <p>De las diferentes IPs de origen accediendo al servidor, ¿Cuántas
 pertenecen a una IP claramente educativa (que contenga “.edu”)?</p>
 <p>Para resolver esta pregunta utilizamos la función str_detect</p>
-<pre class="r"><code>&gt; sum (str_detect(epa_http$IPs, &quot;.edu&quot;))</code></pre>
-<p>6539</p>
+<pre class="r"><code>sum (str_detect(epa_http$IPs, &quot;.edu&quot;))</code></pre>
+<pre class="r"><code>[1] 6539</code></pre>
 </div>
 <div id="pregunta-3" class="section level3">
 <h3>Pregunta 3</h3>
-<p>De todas las peticiones recibidas por el servidor cuál es la hora en
+<p>De todas las peticiones recibidas por el servidor ¿Cuál es la hora en
 la que hay mayor volumen de peticiones HTTP de tipo “GET”?</p>
 <ul>
-<li><p>Separamos variable(columnas) en varias columnas epa_http &lt;-
-epa_http %&gt;%
-separate(Timestamp,paste0(“Timestamp”,1:4),sep=‘:’)</p></li>
-<li><p>Unimos variables (columnas) epa_http &lt;- epa_http %&gt;%
-unite(Timestamp2,Timestamp3,Timestamp4, col = Time, sep = “:”, remove =
-FALSE)%&gt;%</p></li>
-<li><p>Quitamos el parametro “]” epa_http<span class="math inline">\(Time&lt;-substring(epa_http\)</span>Time, 1,</p>
-<ol start="8" style="list-style-type: decimal">
-<li>epa_http<span class="math inline">\(Timestamp1&lt;-substring(epa_http\)</span>Timestamp1,
-2, 3)</li>
-</ol></li>
-<li><p>Selección de tipo de petición epa_http<span class="math inline">\(Phoras &lt;- ifelse
-(str_equal(&quot;GET&quot;,epa_http\)</span>Tipo) ==TRUE,
-epa_http$Timestamp2, NA )</p></li>
-<li><p>Conteo de horas y creación de nueva tabla copy_epa &lt;-epa_http
-%&gt;% group_by(Phoras) %&gt;% tally()</p></li>
-<li><p>Hora con más peticiones copy_epa[15, 1] max(copy_epa$n)</p></li>
-<li><p>Hora con más peticiones, segunda opción Qhora &lt;- copy_epa<span class="math inline">\(Phoras[which.max(copy_epa\)</span>n)]
-print(Qhora)</p></li>
+<li><p>Para resolver esta pregunta primero observamos que los datos
+están almacenados en día, hora, minutos y segundos, así que para poder
+usar el dato hora separamos los valores de Timestamp en varias
+columnas</p>
+<pre class="r"><code>epa_http &lt;- epa_http %&gt;% separate(Timestamp, paste0(&quot;Timestamp&quot;,1:4),sep=&#39;:&#39;)</code></pre>
+<p>Después eliminamos los corchetes en la columna Timestamp1 y
+Timestamp4 y de la columna Tipo eliminamos las dobles comillas</p>
+<pre class="r"><code>epa_http$Timestamp1 &lt;- str_replace( epa_http$Timestamp1, &quot;\\[&quot;, &quot;&quot;)</code></pre>
+<pre class="r"><code>epa_http$Timestamp4 &lt;- str_replace( epa_http$Timestamp4, &quot;\\]&quot;, &quot;&quot;)</code></pre>
+<pre class="r"><code>epa_http$Tipo &lt;- str_replace (epa_http$Tipo, &quot;\&quot;&quot;, &quot;&quot;)</code></pre>
+<p>Creamos una condición que cumpla que si la petición es de tipo GET
+almacene la hora en una nueva columna llamada Phoras.</p>
+<pre class="r"><code>epa_http$Phoras &lt;- ifelse (str_equal (&quot;GET&quot;, epa_http$Tipo) == TRUE, epa_http$Timestamp2, NA )</code></pre>
+<p>Creamos una nueva tabla y ahi almacenaremos las horas agrupadas y el
+conteo de cuantas peticiones por hora se hacen</p>
+<pre class="r"><code>copy_epa &lt;-epa_http %&gt;% group_by(Phoras) %&gt;% tally()</code></pre>
+<p>Finalmente buscamos en la nueva tabla creada cual es la hora en que
+mayor volumen de peticiones se hace</p>
+<pre class="r"><code>Qhora &lt;- copy_epa$Phoras [which.max (copy_epa$n)] 
+print(Qhora)</code></pre>
+<pre class="r"><code>[1] &quot;14&quot;</code></pre></li>
 </ul>
 </div>
 <div id="pregunta-4" class="section level3">

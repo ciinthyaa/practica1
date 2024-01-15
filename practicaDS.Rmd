@@ -148,21 +148,21 @@ respuesta, y Bytes de reply.
     [1] 47748     7
     ```
 
-2.  alor medio de la columna Bytes
+2.  Valor medio de la columna Bytes
 
     Para poder realizar esta pregunta primero debemos asignar valores de
     0 a aquellas celdas que no tienen valores asignados en la columna
     Bytes
 
     ``` r
-    epa_http$Bytes[ is.na (epa_http$Bytes)] <- 0
+    epa_http$Bytes [is.na (epa_http$Bytes)] <- 0
     ```
 
     Después hacemos uso de la función mean y ya podemos obtener el valor
     medio.
 
     ``` r
-    mean(epa_http$Bytes)
+    mean (epa_http$Bytes)
     ```
 
     ``` r
@@ -177,40 +177,66 @@ pertenecen a una IP claramente educativa (que contenga ".edu")?
 Para resolver esta pregunta utilizamos la función str_detect
 
 ``` r
-sum (str_detect(epa_http$IPs, ".edu"))
+sum (str_detect (epa_http$IPs, ".edu"))
 ```
 
 ``` r
-6539
+[1] 6539
 ```
 
 ### Pregunta 3
 
-De todas las peticiones recibidas por el servidor cuál es la hora en la
+De todas las peticiones recibidas por el servidor ¿Cuál es la hora en la
 que hay mayor volumen de peticiones HTTP de tipo "GET"?
 
--   Separamos variable(columnas) en varias columnas epa_http \<-
-    epa_http %\>% separate(Timestamp,paste0("Timestamp",1:4),sep=':')
+Para resolver esta pregunta primero observamos que los datos están
+almacenados en día, hora, minutos y segundos, así que para poder usar el
+dato hora separamos los valores de Timestamp en varias columnas
 
--   Unimos variables (columnas) epa_http \<- epa_http %\>%
-    unite(Timestamp2,Timestamp3,Timestamp4, col = Time, sep = ":",
-    remove = FALSE)%\>%
+``` r
+epa_http <- epa_http %>% separate (Timestamp, paste0("Timestamp",1:4),sep=':')
+```
 
--   Quitamos el parametro "]" epa_http$Time<-substring(epa_http$Time, 1,
+Después eliminamos los corchetes en la columna Timestamp1 y Timestamp4 y
+de la columna Tipo eliminamos las dobles comillas
 
-    8)  epa_http$Timestamp1<-substring(epa_http$Timestamp1, 2, 3)
+``` r
+epa_http$Timestamp1 <- str_replace( epa_http$Timestamp1, "\\[", "")
+```
 
--   Selección de tipo de petición
-    epa_http$Phoras <- ifelse (str_equal("GET",epa_http$Tipo) ==TRUE,
-    epa_http\$Timestamp2, NA )
+``` r
+epa_http$Timestamp4 <- str_replace( epa_http$Timestamp4, "\\]", "")
+```
 
--   Conteo de horas y creación de nueva tabla copy_epa \<-epa_http %\>%
-    group_by(Phoras) %\>% tally()
+``` r
+epa_http$Tipo <- str_replace (epa_http$Tipo, "\"", "")
+```
 
--   Hora con más peticiones copy_epa[15, 1] max(copy_epa\$n)
+Creamos una condición que cumpla que si la petición es de tipo GET
+almacene la hora en una nueva columna llamada Phoras.
 
--   Hora con más peticiones, segunda opción Qhora \<-
-    copy_epa$Phoras[which.max(copy_epa$n)] print(Qhora)
+``` r
+epa_http$Phoras <- ifelse (str_equal ("GET", epa_http$Tipo) == TRUE, epa_http$Timestamp2, NA )
+```
+
+Creamos una nueva tabla y ahi almacenaremos las horas agrupadas y el
+conteo de cuantas peticiones por hora se hacen
+
+``` r
+copy_epa <-epa_http %>% group_by(Phoras) %>% tally()
+```
+
+Finalmente buscamos en la nueva tabla creada cual es la hora en que
+mayor volumen de peticiones se hace
+
+``` r
+Qhora <- copy_epa$Phoras [which.max (copy_epa$n)] 
+print(Qhora)
+```
+
+``` r
+[1] "14"
+```
 
 ### Pregunta 4
 
