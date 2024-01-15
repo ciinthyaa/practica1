@@ -113,3 +113,13 @@ De las peticiones hechas por instituciones educativas (.edu), ¿Cuantos bytes en
 epa_http$compa <- ifelse( (str_detect(epa_http$IPs, ".edu"))==TRUE & (str_detect(epa_http$URL, ".txt")) == TRUE, epa_http$Bytes, NA )
 epa_http$compa[is.na(epa_http$compa)] <- 0
 sum(epa_http$compa)
+
+### Pregunta 5
+Si separamos la petición en 3 partes (Tipo, URL, Protocolo), usando str_split y el separador " " (espacio), ¿cuantas peticiones buscan directamente la URL = "/"?
+
+sum(str_equal("/",epa_http$URL))
+
+### Pregunta 6
+Aprovechando que hemos separado la petición en 3 partes (Tipo, URL, Protocolo) ¿Cuantas peticiones NO tienen como protocolo "HTTP/0.2"?
+
+sum(!str_equal("HTTP/0.2",epa_http$Protocolo))
