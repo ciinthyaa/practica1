@@ -16,83 +16,159 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Pregunta 1
 
-De las siguientes preguntas, clasifica cada una como descriptiva, exploratoria, inferencia, predictiva o causal, y razona brevemente (una frase) el por qué:
+De las siguientes preguntas, clasifica cada una como descriptiva,
+exploratoria, inferencia, predictiva o causal, y razona brevemente (una
+frase) el por qué:
 
-1.  Dado un registro de vehículos que circulan por una autopista, disponemos de su marca y modelo, país de matriculación, y tipo de vehículo (por número de ruedas). Con tal de ajustar precios de los peajes, ¿Cuántos vehículos tenemos por tipo? ¿Cuál es el tipo más frecuente? ¿De qué países tenemos más vehículos?
+1.  Dado un registro de vehículos que circulan por una autopista,
+    disponemos de su marca y modelo, país de matriculación, y tipo de
+    vehículo (por número de ruedas). Con tal de ajustar precios de los
+    peajes, ¿Cuántos vehículos tenemos por tipo? ¿Cuál es el tipo más
+    frecuente? ¿De qué países tenemos más vehículos?
 
-    **Respuesta:** Pregunta exploratoria. Porque se realiza un análisis de diversa información obtenida sobre los vehículos que circulan en una autopista.
+    **Respuesta:** Pregunta exploratoria. Porque se realiza un análisis
+    de diversa información obtenida sobre los vehículos que circulan en
+    una autopista.
 
-2.  Dado un registro de visualizaciones de un servicio de video-on-demand, donde disponemos de los datos del usuario, de la película seleccionada, fecha de visualización y categoría de la película, queremos saber ¿Hay alguna preferencia en cuanto a género literario según los usuarios y su rango de edad?
+2.  Dado un registro de visualizaciones de un servicio de
+    video-on-demand, donde disponemos de los datos del usuario, de la
+    película seleccionada, fecha de visualización y categoría de la
+    película, queremos saber ¿Hay alguna preferencia en cuanto a género
+    literario según los usuarios y su rango de edad?
 
-    **Respuesta:** Pregunta descriptiva. Porque el conjunto de datos busca encontrar información.
+    **Respuesta:** Pregunta descriptiva. Porque el conjunto de datos
+    busca encontrar información.
 
-3.  Dado un registro de peticiones a un sitio web, vemos que las peticiones que provienen de una red de telefonía concreta acostumbran a ser incorrectas y provocarnos errores de servicio. ¿Podemos determinar si en el futuro, los próximos mensajes de esa red seguirán dando problemas? ¿Hemos notado el mismo efecto en otras redes de telefonía?
+3.  Dado un registro de peticiones a un sitio web, vemos que las
+    peticiones que provienen de una red de telefonía concreta
+    acostumbran a ser incorrectas y provocarnos errores de servicio.
+    ¿Podemos determinar si en el futuro, los próximos mensajes de esa
+    red seguirán dando problemas? ¿Hemos notado el mismo efecto en otras
+    redes de telefonía?
 
-    **Respuesta:** Pregunta predictiva. Porque se pretende hacer una predicción acerca del servicio de telefonía en un futuro.
+    **Respuesta:** Pregunta predictiva. Porque se pretende hacer una
+    predicción acerca del servicio de telefonía en un futuro.
 
-4.  Dado los registros de usuarios de un servicio de compras por internet, los usuarios pueden agruparse por preferencias de productos comprados. Queremos saber si ¿Es posible que, dado un usuario al azar y según su historial, pueda ser directamente asignado a un o diversos grupos
+4.  Dado los registros de usuarios de un servicio de compras por
+    internet, los usuarios pueden agruparse por preferencias de
+    productos comprados. Queremos saber si ¿Es posible que, dado un
+    usuario al azar y según su historial, pueda ser directamente
+    asignado a un o diversos grupos
 
-    **Respuesta:** Pregunta inferencial. Porque la tendencia o el comportamiento de compras del usuario permite clasificarlo a un grupo o varios.
+    **Respuesta:** Pregunta inferencial. Porque la tendencia o el
+    comportamiento de compras del usuario permite clasificarlo a un
+    grupo o varios.
 
 ### Pregunta 2
 
 Considera el siguiente escenario:
 
-Sabemos que un usuario de nuestra red empresarial ha estado usando esta para fines no relacionados con el trabajo, como por ejemplo tener un servicio web no autorizado abierto a la red (otros usuarios tienen servicios web activados y autorizados). No queremos tener que rastrear los puertos de cada PC, y sabemos que la actividad puede haber cesado. Pero podemos acceder a los registros de conexiones TCP de cada máquina de cada trabajador (hacia donde abre conexión un PC concreto). Sabemos que nuestros clientes se conectan desde lugares remotos de forma legítima, como parte de nuestro negocio, y que un trabajador puede haber habilitado temporalmente servicios de prueba. Nuestro objetivo es reducir lo posible la lista de posibles culpables, con tal de explicarles que por favor no expongan nuestros sistemas sin permiso de los operadores o la dirección.
+Sabemos que un usuario de nuestra red empresarial ha estado usando esta
+para fines no relacionados con el trabajo, como por ejemplo tener un
+servicio web no autorizado abierto a la red (otros usuarios tienen
+servicios web activados y autorizados). No queremos tener que rastrear
+los puertos de cada PC, y sabemos que la actividad puede haber cesado.
+Pero podemos acceder a los registros de conexiones TCP de cada máquina
+de cada trabajador (hacia donde abre conexión un PC concreto). Sabemos
+que nuestros clientes se conectan desde lugares remotos de forma
+legítima, como parte de nuestro negocio, y que un trabajador puede haber
+habilitado temporalmente servicios de prueba. Nuestro objetivo es
+reducir lo posible la lista de posibles culpables, con tal de
+explicarles que por favor no expongan nuestros sistemas sin permiso de
+los operadores o la dirección.
 
-Explica con detalle cómo se podría proceder al análisis y resolución del problema mediante Data Science, indicando de donde se obtendrían los datos, qué tratamiento deberían recibir, qué preguntas hacerse para resolver el problema, qué datos y gráficos se obtendrían, y cómo se comunicarían estos.
+Explica con detalle cómo se podría proceder al análisis y resolución del
+problema mediante Data Science, indicando de donde se obtendrían los
+datos, qué tratamiento deberían recibir, qué preguntas hacerse para
+resolver el problema, qué datos y gráficos se obtendrían, y cómo se
+comunicarían estos.
 
-**Respuesta:** ¿Que necesitamos saber/conocer?¿Cuál es el usuario culpable?¿Cómo lo hizo?¿Qué datos tenemos?
-- Los registros de conexiones TCP de cada máquina de cada trabajador.
-- Conocemos que clientes se conectan desde lugares remotos de forma legítima.
-- Sabemos cuáles son los servicios legítimos que tenemos activos.
-- Los puertos que se mantienen como lícitos para el uso de los servicios.
+**Respuesta:** ¿Que necesitamos saber/conocer?¿Cuál es el usuario
+culpable?¿Cómo lo hizo?¿Qué datos tenemos? - Los registros de conexiones
+TCP de cada máquina de cada trabajador. - Conocemos que clientes se
+conectan desde lugares remotos de forma legítima. - Sabemos cuáles son
+los servicios legítimos que tenemos activos. - Los puertos que se
+mantienen como lícitos para el uso de los servicios.
 
 Acciones:
 
-- Explorar los datos que tenemos:
- - Logs de cada máquina.
- - Servicios y puertos permitidos.
- - Listado de usuarios de la empresa.
- - Dominios legítimos en los cuales se puede mantener comunicación.
-- Normalizar, adecuar o etiquetar los datos.
-- Comparar los servicios legítimos con los que estuvieron o están habilitados en los logs.
-- Comparar los puertos activos que están marcados como legítimos.
-- Ir generando una tabla con los usuarios cuya comparación indique que existió una violación de servicios.
-- Generar graficas que muestren las comparaciones antes mencionadas, en las cuales se debe visualizar los servicios y puertos ilegítimos. 
-- Generar una gráfica que muestre la totalidad de los usuarios y el porcentaje de usuarios que hizo uso de servicios no autorizados.
+-   Explorar los datos que tenemos:
+-   Logs de cada máquina.
+-   Servicios y puertos permitidos.
+-   Listado de usuarios de la empresa.
+-   Dominios legítimos en los cuales se puede mantener comunicación.
+-   Normalizar, adecuar o etiquetar los datos.
+-   Comparar los servicios legítimos con los que estuvieron o están
+    habilitados en los logs.
+-   Comparar los puertos activos que están marcados como legítimos.
+-   Ir generando una tabla con los usuarios cuya comparación indique que
+    existió una violación de servicios.
+-   Generar graficas que muestren las comparaciones antes mencionadas,
+    en las cuales se debe visualizar los servicios y puertos ilegítimos.
+-   Generar una gráfica que muestre la totalidad de los usuarios y el
+    porcentaje de usuarios que hizo uso de servicios no autorizados.
 
-Conclusiones y toma de decisiones según los resultados:
-- Analizar si el uso de esos servicios es realmente requerido para los usuarios.
-- Concientizar sobre el uso adecuado de las políticas establecidas en la organización.
-- Implementar políticas que bloqueen el uso tanto de puertos como de servicios ilegítimos.
+Conclusiones y toma de decisiones según los resultados: - Analizar si el
+uso de esos servicios es realmente requerido para los usuarios. -
+Concientizar sobre el uso adecuado de las políticas establecidas en la
+organización. - Implementar políticas que bloqueen el uso tanto de
+puertos como de servicios ilegítimos.
 
 ## Introducción a R
 
-### Pregunta 1
+Antes de proceder a resolver las preguntas, primero cargamos el archivo
+haciendo uso del asistante visual de Rstudio, y con esta misma
+herramienta separamos los datos en columnas y filas, y cambiamos el
+formato de los datos a numérico en la ultima columna del documento
+cargado.
 
-Una vez cargado el Dataset a analizar, comprobando que se cargan las IPs, el Timestamp, la Petición (Tipo, URL y Protocolo), Código de respuesta, y Bytes de reply.
+Asignamos el nombre a las columnas con el siguiente código:
 
-```         
-colnames(epa_http)<-c("IPs","Timestamp","Tipo","URL","Protocolo","Código de respuesta","Bytes")
+``` r
+colnames (epa_http) <- c("IPs", "Timestamp", "Tipo", "URL", "Protocolo", "Código de respuesta", "Bytes")
 ```
 
--   Cuáles son las dimensiones del dataset cargado (número de filas y columnas)
+### Pregunta 1
 
-    ```         
-    > dim(epa_http) 
-    [1] 47748     7
+Una vez cargado el Dataset a analizar, comprobando que se cargan las
+IPs, el Timestamp, la Petición (Tipo, URL y Protocolo), Código de
+respuesta, y Bytes de reply.
+
+Para responder el literal 1 y 2, haremos uso de funciones, para el
+literal 1 la función dim y para el literal 2 la funcion mean.
+
+1.  ¿Cuáles son las dimensiones del dataset cargado (número de filas y
+    columnas)?
+
+    > ``` r
+    > dim(epa_http)
+    > ```
+    >
+    > *Respuesta:* Existen 47748 columnas y 7 filas
+
+2.  Valor medio de la columna Bytes
+
+    Para poder realizar esta pregunta primero debemos asignar valores de
+    0 a aquellas celdas que no tienen valores asignados en la columna
+    Bytes
+
+    ``` r
+    epa_http2$Bytes[ is.na (epa_http2$Bytes)] <- 0
     ```
 
--   Valor medio de la columna Bytes
+    Después hacemos uso de la función y ya podemos obtener el valor
+    medio.
 
-    ```         
-     mean(epa_http$Bytes) 
-     [1] 6531.457
+    ``` r
+    mean(epa_http$Bytes)
     ```
+
+    *Respuesta:* El valor medio es de 6531.457
 
 ### Pregunta 2
-De las diferentes IPs de origen accediendo al servidor, ¿Cuántas pertenecen a una IP claramente educativa (que contenga ".edu")?
+
+De las diferentes IPs de origen accediendo al servidor, ¿Cuántas
+pertenecen a una IP claramente educativa (que contenga ".edu")?
 
 ```         
 > sum(str_detect(epa_http$IPs, ".edu"))
@@ -100,49 +176,54 @@ De las diferentes IPs de origen accediendo al servidor, ¿Cuántas pertenecen a 
 ```
 
 ### Pregunta 3
-De todas las peticiones recibidas por el servidor cuál es la hora en la que hay mayor volumen de peticiones HTTP de tipo "GET"?
 
-- Separamos variable(columnas) en varias columnas
-epa_http <- epa_http %>%
-    separate(Timestamp,paste0("Timestamp",1:4),sep=':')
+De todas las peticiones recibidas por el servidor cuál es la hora en la
+que hay mayor volumen de peticiones HTTP de tipo "GET"?
 
-- Unimos variables (columnas)
-epa_http <- epa_http %>%
-    unite(Timestamp2,Timestamp3,Timestamp4, col = Time, sep = ":", remove = FALSE)%>%
+-   Separamos variable(columnas) en varias columnas epa_http \<-
+    epa_http %\>% separate(Timestamp,paste0("Timestamp",1:4),sep=':')
 
-- Quitamos el parametro "]"
-epa_http$Time<-substring(epa_http$Time, 1, 8)
-epa_http$Timestamp1<-substring(epa_http$Timestamp1, 2, 3)
+-   Unimos variables (columnas) epa_http \<- epa_http %\>%
+    unite(Timestamp2,Timestamp3,Timestamp4, col = Time, sep = ":",
+    remove = FALSE)%\>%
 
-- Selección de tipo de petición 
-epa_http$Phoras <- ifelse (str_equal("GET",epa_http$Tipo) ==TRUE, epa_http$Timestamp2, NA )
+-   Quitamos el parametro "]" epa_http$Time<-substring(epa_http$Time, 1,
 
-- Conteo de horas y creación de nueva tabla
-copy_epa <-epa_http %>%
-    group_by(Phoras) %>%
-    tally()
+    8)  epa_http$Timestamp1<-substring(epa_http$Timestamp1, 2, 3)
 
-- Hora con más peticiones
-copy_epa[15, 1]
-max(copy_epa$n)
+-   Selección de tipo de petición
+    epa_http$Phoras <- ifelse (str_equal("GET",epa_http$Tipo) ==TRUE,
+    epa_http\$Timestamp2, NA )
 
-- Hora con más peticiones, segunda opción 
-Qhora <- copy_epa$Phoras[which.max(copy_epa$n)]
-print(Qhora)
+-   Conteo de horas y creación de nueva tabla copy_epa \<-epa_http %\>%
+    group_by(Phoras) %\>% tally()
+
+-   Hora con más peticiones copy_epa[15, 1] max(copy_epa\$n)
+
+-   Hora con más peticiones, segunda opción Qhora \<-
+    copy_epa$Phoras[which.max(copy_epa$n)] print(Qhora)
 
 ### Pregunta 4
-De las peticiones hechas por instituciones educativas (.edu), ¿Cuantos bytes en total se han transmitido, en peticiones de descarga de ficheros de texto ".txt"?
 
-epa_http$compa <- ifelse( (str_detect(epa_http$IPs, ".edu"))==TRUE & (str_detect(epa_http$URL, ".txt")) == TRUE, epa_http$Bytes, NA )
-epa_http$compa[is.na(epa_http$compa)] <- 0
-sum(epa_http$compa)
+De las peticiones hechas por instituciones educativas (.edu), ¿Cuantos
+bytes en total se han transmitido, en peticiones de descarga de ficheros
+de texto ".txt"?
+
+epa_http$compa <- ifelse( (str_detect(epa_http$IPs, ".edu"))==TRUE &
+(str_detect(epa_http$URL, ".txt")) == TRUE, epa_http$Bytes, NA )
+epa_http$compa[is.na(epa_http$compa)] \<- 0 sum(epa_http\$compa)
 
 ### Pregunta 5
-Si separamos la petición en 3 partes (Tipo, URL, Protocolo), usando str_split y el separador " " (espacio), ¿cuantas peticiones buscan directamente la URL = "/"?
 
-sum(str_equal("/",epa_http$URL))
+Si separamos la petición en 3 partes (Tipo, URL, Protocolo), usando
+str_split y el separador " " (espacio), ¿cuantas peticiones buscan
+directamente la URL = "/"?
+
+sum(str_equal("/",epa_http\$URL))
 
 ### Pregunta 6
-Aprovechando que hemos separado la petición en 3 partes (Tipo, URL, Protocolo) ¿Cuantas peticiones NO tienen como protocolo "HTTP/0.2"?
 
-sum(!str_equal("HTTP/0.2",epa_http$Protocolo))
+Aprovechando que hemos separado la petición en 3 partes (Tipo, URL,
+Protocolo) ¿Cuantas peticiones NO tienen como protocolo "HTTP/0.2"?
+
+sum(!str_equal("HTTP/0.2",epa_http\$Protocolo))

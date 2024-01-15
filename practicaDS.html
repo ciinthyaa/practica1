@@ -420,8 +420,113 @@ del problema mediante Data Science, indicando de donde se obtendrían los
 datos, qué tratamiento deberían recibir, qué preguntas hacerse para
 resolver el problema, qué datos y gráficos se obtendrían, y cómo se
 comunicarían estos.</p>
-<p><strong>Respuesta: </strong> Se obtendrían los datos del registro
-historial</p>
+<p><strong>Respuesta:</strong> ¿Que necesitamos saber/conocer?¿Cuál es
+el usuario culpable?¿Cómo lo hizo?¿Qué datos tenemos? - Los registros de
+conexiones TCP de cada máquina de cada trabajador. - Conocemos que
+clientes se conectan desde lugares remotos de forma legítima. - Sabemos
+cuáles son los servicios legítimos que tenemos activos. - Los puertos
+que se mantienen como lícitos para el uso de los servicios.</p>
+<p>Acciones:</p>
+<ul>
+<li>Explorar los datos que tenemos:</li>
+<li>Logs de cada máquina.</li>
+<li>Servicios y puertos permitidos.</li>
+<li>Listado de usuarios de la empresa.</li>
+<li>Dominios legítimos en los cuales se puede mantener
+comunicación.</li>
+<li>Normalizar, adecuar o etiquetar los datos.</li>
+<li>Comparar los servicios legítimos con los que estuvieron o están
+habilitados en los logs.</li>
+<li>Comparar los puertos activos que están marcados como legítimos.</li>
+<li>Ir generando una tabla con los usuarios cuya comparación indique que
+existió una violación de servicios.</li>
+<li>Generar graficas que muestren las comparaciones antes mencionadas,
+en las cuales se debe visualizar los servicios y puertos
+ilegítimos.</li>
+<li>Generar una gráfica que muestre la totalidad de los usuarios y el
+porcentaje de usuarios que hizo uso de servicios no autorizados.</li>
+</ul>
+<p>Conclusiones y toma de decisiones según los resultados: - Analizar si
+el uso de esos servicios es realmente requerido para los usuarios. -
+Concientizar sobre el uso adecuado de las políticas establecidas en la
+organización. - Implementar políticas que bloqueen el uso tanto de
+puertos como de servicios ilegítimos.</p>
+</div>
+</div>
+<div id="introducción-a-r" class="section level2">
+<h2>Introducción a R</h2>
+<div id="pregunta-1-1" class="section level3">
+<h3>Pregunta 1</h3>
+<p>Una vez cargado el Dataset a analizar, comprobando que se cargan las
+IPs, el Timestamp, la Petición (Tipo, URL y Protocolo), Código de
+respuesta, y Bytes de reply.</p>
+<pre><code>colnames(epa_http)&lt;-c(&quot;IPs&quot;,&quot;Timestamp&quot;,&quot;Tipo&quot;,&quot;URL&quot;,&quot;Protocolo&quot;,&quot;Código de respuesta&quot;,&quot;Bytes&quot;)</code></pre>
+<ul>
+<li><p>Cuáles son las dimensiones del dataset cargado (número de filas y
+columnas)</p>
+<pre><code>&gt; dim(epa_http) 
+[1] 47748     7</code></pre></li>
+<li><p>Valor medio de la columna Bytes</p>
+<pre><code> mean(epa_http$Bytes) 
+ [1] 6531.457</code></pre></li>
+</ul>
+</div>
+<div id="pregunta-2-1" class="section level3">
+<h3>Pregunta 2</h3>
+<p>De las diferentes IPs de origen accediendo al servidor, ¿Cuántas
+pertenecen a una IP claramente educativa (que contenga “.edu”)?</p>
+<pre><code>&gt; sum(str_detect(epa_http$IPs, &quot;.edu&quot;))
+[1] 6539</code></pre>
+</div>
+<div id="pregunta-3" class="section level3">
+<h3>Pregunta 3</h3>
+<p>De todas las peticiones recibidas por el servidor cuál es la hora en
+la que hay mayor volumen de peticiones HTTP de tipo “GET”?</p>
+<ul>
+<li><p>Separamos variable(columnas) en varias columnas epa_http &lt;-
+epa_http %&gt;%
+separate(Timestamp,paste0(“Timestamp”,1:4),sep=‘:’)</p></li>
+<li><p>Unimos variables (columnas) epa_http &lt;- epa_http %&gt;%
+unite(Timestamp2,Timestamp3,Timestamp4, col = Time, sep = “:”, remove =
+FALSE)%&gt;%</p></li>
+<li><p>Quitamos el parametro “]” epa_http<span class="math inline">\(Time&lt;-substring(epa_http\)</span>Time, 1,</p>
+<ol start="8" style="list-style-type: decimal">
+<li>epa_http<span class="math inline">\(Timestamp1&lt;-substring(epa_http\)</span>Timestamp1,
+2, 3)</li>
+</ol></li>
+<li><p>Selección de tipo de petición epa_http<span class="math inline">\(Phoras &lt;- ifelse
+(str_equal(&quot;GET&quot;,epa_http\)</span>Tipo) ==TRUE,
+epa_http$Timestamp2, NA )</p></li>
+<li><p>Conteo de horas y creación de nueva tabla copy_epa &lt;-epa_http
+%&gt;% group_by(Phoras) %&gt;% tally()</p></li>
+<li><p>Hora con más peticiones copy_epa[15, 1] max(copy_epa$n)</p></li>
+<li><p>Hora con más peticiones, segunda opción Qhora &lt;- copy_epa<span class="math inline">\(Phoras[which.max(copy_epa\)</span>n)]
+print(Qhora)</p></li>
+</ul>
+</div>
+<div id="pregunta-4" class="section level3">
+<h3>Pregunta 4</h3>
+<p>De las peticiones hechas por instituciones educativas (.edu),
+¿Cuantos bytes en total se han transmitido, en peticiones de descarga de
+ficheros de texto “.txt”?</p>
+<p>epa_http<span class="math inline">\(compa &lt;- ifelse(
+(str_detect(epa_http\)</span>IPs, “.edu”))==TRUE &amp;
+(str_detect(epa_http<span class="math inline">\(URL, &quot;.txt&quot;))
+== TRUE, epa_http\)</span>Bytes, NA ) epa_http<span class="math inline">\(compa[is.na(epa_http\)</span>compa)] &lt;- 0
+sum(epa_http$compa)</p>
+</div>
+<div id="pregunta-5" class="section level3">
+<h3>Pregunta 5</h3>
+<p>Si separamos la petición en 3 partes (Tipo, URL, Protocolo), usando
+str_split y el separador ” ” (espacio), ¿cuantas peticiones buscan
+directamente la URL = “/”?</p>
+<p>sum(str_equal(“/”,epa_http$URL))</p>
+</div>
+<div id="pregunta-6" class="section level3">
+<h3>Pregunta 6</h3>
+<p>Aprovechando que hemos separado la petición en 3 partes (Tipo, URL,
+Protocolo) ¿Cuantas peticiones NO tienen como protocolo “HTTP/0.2”?</p>
+<p>sum(!str_equal(“HTTP/0.2”,epa_http$Protocolo))</p>
 </div>
 </div>
 
