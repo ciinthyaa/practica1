@@ -244,9 +244,29 @@ De las peticiones hechas por instituciones educativas (.edu), ¿Cuantos
 bytes en total se han transmitido, en peticiones de descarga de ficheros
 de texto ".txt"?
 
-epa_http$compa <- ifelse( (str_detect(epa_http$IPs, ".edu"))==TRUE &
-(str_detect(epa_http$URL, ".txt")) == TRUE, epa_http$Bytes, NA )
-epa_http$compa[is.na(epa_http$compa)] \<- 0 sum(epa_http\$compa)
+Para resolver esta pregunta creamos una columna en donde se almacenaran
+los valores de Bytes según se cumpla la condición
+
+``` r
+epa_http$compa <- ifelse((str_detect(epa_http$IPs, ".edu")) == TRUE & (str_detect(epa_http$URL, ".txt")) == TRUE, epa_http$Bytes, NA )
+```
+
+Cambiamos los valores NA a 0 para poder realizar la suma
+
+``` r
+epa_http$compa[is.na(epa_http$compa)] <- 0
+```
+
+Y finalmente sumamos todos los valores almacenados para encontrar el
+total de bytes transmitidos
+
+``` r
+sum(epa_http$compa)
+```
+
+``` r
+[1] 3017871
+```
 
 ### Pregunta 5
 
@@ -254,11 +274,22 @@ Si separamos la petición en 3 partes (Tipo, URL, Protocolo), usando
 str_split y el separador " " (espacio), ¿cuantas peticiones buscan
 directamente la URL = "/"?
 
-sum(str_equal("/",epa_http\$URL))
+Realizamos la sumatoria de todos los casos en los cuales la columna URL
+es igual "/" dado que que es a donde apunta la peticion.
+
+``` r
+sum(str_equal("/",epa_http$URL))
+```
 
 ### Pregunta 6
 
 Aprovechando que hemos separado la petición en 3 partes (Tipo, URL,
 Protocolo) ¿Cuantas peticiones NO tienen como protocolo "HTTP/0.2"?
 
-sum(!str_equal("HTTP/0.2",epa_http\$Protocolo))
+Realizamos la sumatoria de todas las peticiones donde no se uso el
+protocolo HTTP/0.2 en la columna protocolo se añade el parametro ! para
+que este tome todos los casos que sean diferentes al HTTP2.
+
+``` r
+sum(!str_equal("HTTP/0.2",epa_http$Protocolo))
+```

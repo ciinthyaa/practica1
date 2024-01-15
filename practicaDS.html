@@ -478,10 +478,10 @@ filas y columnas.</p>
 <p>Para poder realizar esta pregunta primero debemos asignar valores de
 0 a aquellas celdas que no tienen valores asignados en la columna
 Bytes</p>
-<pre class="r"><code>epa_http$Bytes[ is.na (epa_http$Bytes)] &lt;- 0</code></pre>
+<pre class="r"><code>epa_http$Bytes [is.na (epa_http$Bytes)] &lt;- 0</code></pre>
 <p>Después hacemos uso de la función mean y ya podemos obtener el valor
 medio.</p>
-<pre class="r"><code>mean(epa_http$Bytes)</code></pre>
+<pre class="r"><code>mean (epa_http$Bytes)</code></pre>
 <pre class="r"><code>[1] 6531.457</code></pre></li>
 </ol>
 </div>
@@ -490,19 +490,17 @@ medio.</p>
 <p>De las diferentes IPs de origen accediendo al servidor, ¿Cuántas
 pertenecen a una IP claramente educativa (que contenga “.edu”)?</p>
 <p>Para resolver esta pregunta utilizamos la función str_detect</p>
-<pre class="r"><code>sum (str_detect(epa_http$IPs, &quot;.edu&quot;))</code></pre>
+<pre class="r"><code>sum (str_detect (epa_http$IPs, &quot;.edu&quot;))</code></pre>
 <pre class="r"><code>[1] 6539</code></pre>
 </div>
 <div id="pregunta-3" class="section level3">
 <h3>Pregunta 3</h3>
 <p>De todas las peticiones recibidas por el servidor ¿Cuál es la hora en
 la que hay mayor volumen de peticiones HTTP de tipo “GET”?</p>
-<ul>
-<li><p>Para resolver esta pregunta primero observamos que los datos
-están almacenados en día, hora, minutos y segundos, así que para poder
-usar el dato hora separamos los valores de Timestamp en varias
-columnas</p>
-<pre class="r"><code>epa_http &lt;- epa_http %&gt;% separate(Timestamp, paste0(&quot;Timestamp&quot;,1:4),sep=&#39;:&#39;)</code></pre>
+<p>Para resolver esta pregunta primero observamos que los datos están
+almacenados en día, hora, minutos y segundos, así que para poder usar el
+dato hora separamos los valores de Timestamp en varias columnas</p>
+<pre class="r"><code>epa_http &lt;- epa_http %&gt;% separate (Timestamp, paste0(&quot;Timestamp&quot;,1:4),sep=&#39;:&#39;)</code></pre>
 <p>Después eliminamos los corchetes en la columna Timestamp1 y
 Timestamp4 y de la columna Tipo eliminamos las dobles comillas</p>
 <pre class="r"><code>epa_http$Timestamp1 &lt;- str_replace( epa_http$Timestamp1, &quot;\\[&quot;, &quot;&quot;)</code></pre>
@@ -518,32 +516,40 @@ conteo de cuantas peticiones por hora se hacen</p>
 mayor volumen de peticiones se hace</p>
 <pre class="r"><code>Qhora &lt;- copy_epa$Phoras [which.max (copy_epa$n)] 
 print(Qhora)</code></pre>
-<pre class="r"><code>[1] &quot;14&quot;</code></pre></li>
-</ul>
+<pre class="r"><code>[1] &quot;14&quot;</code></pre>
 </div>
 <div id="pregunta-4" class="section level3">
 <h3>Pregunta 4</h3>
 <p>De las peticiones hechas por instituciones educativas (.edu),
 ¿Cuantos bytes en total se han transmitido, en peticiones de descarga de
 ficheros de texto “.txt”?</p>
-<p>epa_http<span class="math inline">\(compa &lt;- ifelse(
-(str_detect(epa_http\)</span>IPs, “.edu”))==TRUE &amp;
-(str_detect(epa_http<span class="math inline">\(URL, &quot;.txt&quot;))
-== TRUE, epa_http\)</span>Bytes, NA ) epa_http<span class="math inline">\(compa[is.na(epa_http\)</span>compa)] &lt;- 0
-sum(epa_http$compa)</p>
+<p>Para resolver esta pregunta creamos una columna en donde se
+almacenaran los valores de Bytes según se cumpla la condición</p>
+<pre class="r"><code>epa_http$compa &lt;- ifelse((str_detect(epa_http$IPs, &quot;.edu&quot;)) == TRUE &amp; (str_detect(epa_http$URL, &quot;.txt&quot;)) == TRUE, epa_http$Bytes, NA )</code></pre>
+<p>Cambiamos los valores NA a 0 para poder realizar la suma</p>
+<pre class="r"><code>epa_http$compa[is.na(epa_http$compa)] &lt;- 0</code></pre>
+<p>Y finalmente sumamos todos los valores almacenados para encontrar el
+total de bytes transmitidos</p>
+<pre class="r"><code>sum(epa_http$compa)</code></pre>
+<pre class="r"><code>[1] 3017871</code></pre>
 </div>
 <div id="pregunta-5" class="section level3">
 <h3>Pregunta 5</h3>
 <p>Si separamos la petición en 3 partes (Tipo, URL, Protocolo), usando
 str_split y el separador ” ” (espacio), ¿cuantas peticiones buscan
 directamente la URL = “/”?</p>
-<p>sum(str_equal(“/”,epa_http$URL))</p>
+<p>Realizamos la sumatoria de todos los casos en los cuales la columna
+URL es igual “/” dado que que es a donde apunta la peticion.</p>
+<pre class="r"><code>sum(str_equal(&quot;/&quot;,epa_http$URL))</code></pre>
 </div>
 <div id="pregunta-6" class="section level3">
 <h3>Pregunta 6</h3>
 <p>Aprovechando que hemos separado la petición en 3 partes (Tipo, URL,
 Protocolo) ¿Cuantas peticiones NO tienen como protocolo “HTTP/0.2”?</p>
-<p>sum(!str_equal(“HTTP/0.2”,epa_http$Protocolo))</p>
+<p>Realizamos la sumatoria de todas las peticiones donde no se uso el
+protocolo HTTP/0.2 en la columna protocolo se añade el parametro ! para
+que este tome todos los casos que sean diferentes al HTTP2.</p>
+<pre class="r"><code>sum(!str_equal(&quot;HTTP/0.2&quot;,epa_http$Protocolo))</code></pre>
 </div>
 </div>
 
