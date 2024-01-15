@@ -78,3 +78,38 @@ De las diferentes IPs de origen accediendo al servidor, ¿Cuántas pertenecen a 
 
 ### Pregunta 3
 De todas las peticiones recibidas por el servidor cuál es la hora en la que hay mayor volumen de peticiones HTTP de tipo "GET"?
+
+- Separamos variable(columnas) en varias columnas
+epa_http <- epa_http %>%
+    separate(Timestamp,paste0("Timestamp",1:4),sep=':')
+
+- Unimos variables (columnas)
+epa_http <- epa_http %>%
+    unite(Timestamp2,Timestamp3,Timestamp4, col = Time, sep = ":", remove = FALSE)%>%
+
+- Quitamos el parametro "]"
+epa_http$Time<-substring(epa_http$Time, 1, 8)
+epa_http$Timestamp1<-substring(epa_http$Timestamp1, 2, 3)
+
+- Selección de tipo de petición 
+epa_http$Phoras <- ifelse (str_equal("GET",epa_http$Tipo) ==TRUE, epa_http$Timestamp2, NA )
+
+- Conteo de horas y creación de nueva tabla
+copy_epa <-epa_http %>%
+    group_by(Phoras) %>%
+    tally()
+
+- Hora con más peticiones
+copy_epa[15, 1]
+max(copy_epa$n)
+
+- Hora con más peticiones, segunda opción 
+Qhora <- copy_epa$Phoras[which.max(copy_epa$n)]
+print(Qhora)
+
+### Pregunta 4
+De las peticiones hechas por instituciones educativas (.edu), ¿Cuantos bytes en total se han transmitido, en peticiones de descarga de ficheros de texto ".txt"?
+
+epa_http$compa <- ifelse( (str_detect(epa_http$IPs, ".edu"))==TRUE & (str_detect(epa_http$URL, ".txt")) == TRUE, epa_http$Bytes, NA )
+epa_http$compa[is.na(epa_http$compa)] <- 0
+sum(epa_http$compa)
