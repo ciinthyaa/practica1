@@ -420,20 +420,34 @@ del problema mediante Data Science, indicando de donde se obtendrían los
 datos, qué tratamiento deberían recibir, qué preguntas hacerse para
 resolver el problema, qué datos y gráficos se obtendrían, y cómo se
 comunicarían estos.</p>
-<p><strong>Respuesta:</strong> ¿Que necesitamos saber/conocer?¿Cuál es
-el usuario culpable?¿Cómo lo hizo?¿Qué datos tenemos? - Los registros de
-conexiones TCP de cada máquina de cada trabajador. - Conocemos que
-clientes se conectan desde lugares remotos de forma legítima. - Sabemos
-cuáles son los servicios legítimos que tenemos activos. - Los puertos
-que se mantienen como lícitos para el uso de los servicios.</p>
+<p><strong>Respuesta:</strong></p>
+<p>Problemática</p>
+<ul>
+<li><p>¿Que necesitamos saber/conocer?</p></li>
+<li><p>¿Cuál es el usuario culpable?</p></li>
+<li><p>¿Cómo lo hizo?</p></li>
+<li><p>¿Qué datos tenemos?</p>
+<ul>
+<li><p>Los registros de conexiones TCP de cada máquina de cada
+trabajador.</p></li>
+<li><p>Conocemos que clientes se conectan desde lugares remotos de forma
+legítima.</p></li>
+<li><p>Sabemos cuáles son los servicios legítimos que tenemos
+activos.</p></li>
+<li><p>Los puertos que se mantienen como lícitos para el uso de los
+servicios.</p></li>
+</ul></li>
+</ul>
 <p>Acciones:</p>
 <ul>
-<li>Explorar los datos que tenemos:</li>
+<li>Explorar los datos que tenemos:
+<ul>
 <li>Logs de cada máquina.</li>
 <li>Servicios y puertos permitidos.</li>
 <li>Listado de usuarios de la empresa.</li>
 <li>Dominios legítimos en los cuales se puede mantener
 comunicación.</li>
+</ul></li>
 <li>Normalizar, adecuar o etiquetar los datos.</li>
 <li>Comparar los servicios legítimos con los que estuvieron o están
 habilitados en los logs.</li>
@@ -446,11 +460,15 @@ ilegítimos.</li>
 <li>Generar una gráfica que muestre la totalidad de los usuarios y el
 porcentaje de usuarios que hizo uso de servicios no autorizados.</li>
 </ul>
-<p>Conclusiones y toma de decisiones según los resultados: - Analizar si
-el uso de esos servicios es realmente requerido para los usuarios. -
-Concientizar sobre el uso adecuado de las políticas establecidas en la
-organización. - Implementar políticas que bloqueen el uso tanto de
-puertos como de servicios ilegítimos.</p>
+<p>Conclusiones y toma de decisiones según los resultados:</p>
+<ul>
+<li><p>Analizar si el uso de esos servicios es realmente requerido para
+los usuarios.</p></li>
+<li><p>Concientizar sobre el uso adecuado de las políticas establecidas
+en la organización.</p></li>
+<li><p>Implementar políticas que bloqueen el uso tanto de puertos como
+de servicios ilegítimos.</p></li>
+</ul>
 </div>
 </div>
 <div id="introducción-a-r" class="section level2">
@@ -462,6 +480,9 @@ formato de los datos a numérico en la ultima columna del documento
 cargado.</p>
 <p>Asignamos el nombre a las columnas con el siguiente código:</p>
 <pre class="r"><code>colnames (epa_http) &lt;- c(&quot;IPs&quot;, &quot;Timestamp&quot;, &quot;Tipo&quot;, &quot;URL&quot;, &quot;Protocolo&quot;, &quot;Código de respuesta&quot;, &quot;Bytes&quot;)</code></pre>
+<p>Instalamos los dos packages que usaremos:</p>
+<pre class="r"><code>library(stringr)
+library(readr)</code></pre>
 <div id="pregunta-1-1" class="section level3">
 <h3>Pregunta 1</h3>
 <p>Una vez cargado el Dataset a analizar, comprobando que se cargan las
@@ -496,7 +517,7 @@ pertenecen a una IP claramente educativa (que contenga “.edu”)?</p>
 <div id="pregunta-3" class="section level3">
 <h3>Pregunta 3</h3>
 <p>De todas las peticiones recibidas por el servidor ¿Cuál es la hora en
-la que hay mayor volumen de peticiones HTTP de tipo “GET”?</p>
+la qué hay mayor volumen de peticiones HTTP de tipo “GET”?</p>
 <p>Para resolver esta pregunta primero observamos que los datos están
 almacenados en día, hora, minutos y segundos, así que para poder usar el
 dato hora separamos los valores de Timestamp en varias columnas</p>

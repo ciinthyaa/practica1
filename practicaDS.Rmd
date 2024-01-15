@@ -149,6 +149,13 @@ Asignamos el nombre a las columnas con el siguiente código:
 colnames (epa_http) <- c("IPs", "Timestamp", "Tipo", "URL", "Protocolo", "Código de respuesta", "Bytes")
 ```
 
+Instalamos los dos packages que usaremos:
+
+``` r
+library(stringr)
+library(readr)
+```
+
 ### Pregunta 1
 
 Una vez cargado el Dataset a analizar, comprobando que se cargan las
