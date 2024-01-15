@@ -149,9 +149,18 @@ Asignamos el nombre a las columnas con el siguiente código:
 colnames (epa_http) <- c("IPs", "Timestamp", "Tipo", "URL", "Protocolo", "Código de respuesta", "Bytes")
 ```
 
-Instalamos los dos packages que usaremos:
+Instalamos y activamos los packages que usaremos:
 
 ``` r
+install.packages("tidyr")
+install.packages("dplyr")
+install.packages("stringr")
+install.packages("readr")
+```
+
+``` r
+library(tidyr)
+library(dplyr)
 library(stringr)
 library(readr)
 ```
@@ -331,4 +340,8 @@ que este tome todos los casos que sean diferentes al HTTP2.
 
 ``` r
 sum(!str_equal("HTTP/0.2",epa_http$Protocolo))
+```
+
+``` r
+[1] 47747
 ```
