@@ -112,7 +112,7 @@ colnames(epa_http)<-c("IPs","Timestamp","Tipo","URL","Protocolo","Código de res
      [1] 6531.457
     ```
 
-Pregunta 2:
+### Pregunta 2
 De las diferentes IPs de origen accediendo al servidor, ¿cuantas
 pertenecen a una IP
 claramente educativa (que contenga ".edu")?
@@ -122,7 +122,7 @@ claramente educativa (que contenga ".edu")?
 [1] 6539
 ```
 
-Pregunta 3:
+### Pregunta 3
 De todas las peticiones recibidas por el servidor cual es la hora en la
 que hay mayor volumen
 de peticiones HTTP de tipo "GET"?
