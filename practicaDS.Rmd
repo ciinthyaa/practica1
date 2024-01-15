@@ -137,33 +137,28 @@ Conclusiones y toma de decisiones según los resultados:
 
 ## Introducción a R
 
-Antes de proceder a resolver las preguntas, primero cargamos el archivo
-haciendo uso del asistante visual de Rstudio, y con esta misma
-herramienta separamos los datos en columnas y filas, y cambiamos el
-formato de los datos a numérico en la ultima columna del documento
-cargado.
-
-Asignamos el nombre a las columnas con el siguiente código:
-
-``` r
-colnames (epa_http) <- c("IPs", "Timestamp", "Tipo", "URL", "Protocolo", "Código de respuesta", "Bytes")
-```
-
 Instalamos y activamos los packages que usaremos:
 
-``` r
-install.packages("tidyr")
-install.packages("dplyr")
-install.packages("stringr")
-install.packages("readr")
-```
 
-``` r
+```{r}
 library(tidyr)
 library(dplyr)
 library(stringr)
 library(readr)
 ```
+Antes de proceder a resolver las preguntas, primero cargamos el archivo
+
+```{r}
+epa_http <- read_table ("~/Ciberseguridad/5 DataDriven/PRACTICAS/epa-http/epa-http.csv", col_names = FALSE, col_types = cols(X7 = col_number()))
+View(epa_http)
+```
+
+Asignamos el nombre a las columnas con el siguiente código:
+
+```{r}
+colnames (epa_http) <- c("IPs", "Timestamp", "Tipo", "URL", "Protocolo", "Código de respuesta", "Bytes")
+```
+
 
 ### Pregunta 1
 
@@ -177,12 +172,8 @@ respuesta, y Bytes de reply.
     Hacemos uso de la función dim y nos devolverá el valor exacto de
     filas y columnas.
 
-    ``` r
+    ```{r}
     dim(epa_http)
-    ```
-
-    ``` r
-    [1] 47748     7
     ```
 
 2.  Valor medio de la columna Bytes
@@ -191,19 +182,15 @@ respuesta, y Bytes de reply.
     0 a aquellas celdas que no tienen valores asignados en la columna
     Bytes
 
-    ``` r
+    ```{r}
     epa_http$Bytes [is.na (epa_http$Bytes)] <- 0
     ```
 
     Después hacemos uso de la función mean y ya podemos obtener el valor
     medio.
 
-    ``` r
+    ```{r}
     mean (epa_http$Bytes)
-    ```
-
-    ``` r
-    [1] 6531.457
     ```
 
 ### Pregunta 2
@@ -213,12 +200,8 @@ pertenecen a una IP claramente educativa (que contenga ".edu")?
 
 Para resolver esta pregunta utilizamos la función str_detect
 
-``` r
+```{r}
 sum (str_detect (epa_http$IPs, ".edu"))
-```
-
-``` r
-[1] 6539
 ```
 
 ### Pregunta 3
@@ -230,49 +213,41 @@ Para resolver esta pregunta primero observamos que los datos están
 almacenados en día, hora, minutos y segundos, así que para poder usar el
 dato hora separamos los valores de Timestamp en varias columnas
 
-``` r
+```{r}
 epa_http <- epa_http %>% separate (Timestamp, paste0("Timestamp",1:4),sep=':')
 ```
 
 Después eliminamos los corchetes en la columna Timestamp1 y Timestamp4 y
 de la columna Tipo eliminamos las dobles comillas
 
-``` r
+```{r}
 epa_http$Timestamp1 <- str_replace( epa_http$Timestamp1, "\\[", "")
-```
 
-``` r
 epa_http$Timestamp4 <- str_replace( epa_http$Timestamp4, "\\]", "")
-```
 
-``` r
 epa_http$Tipo <- str_replace (epa_http$Tipo, "\"", "")
 ```
 
 Creamos una condición que cumpla que si la petición es de tipo GET
 almacene la hora en una nueva columna llamada Phoras.
 
-``` r
+``` {r}
 epa_http$Phoras <- ifelse (str_equal ("GET", epa_http$Tipo) == TRUE, epa_http$Timestamp2, NA )
 ```
 
 Creamos una nueva tabla y ahi almacenaremos las horas agrupadas y el
 conteo de cuantas peticiones por hora se hacen
 
-``` r
+``` {r}
 copy_epa <-epa_http %>% group_by(Phoras) %>% tally()
 ```
 
 Finalmente buscamos en la nueva tabla creada cual es la hora en que
 mayor volumen de peticiones se hace
 
-``` r
+```{r}
 Qhora <- copy_epa$Phoras [which.max (copy_epa$n)] 
 print(Qhora)
-```
-
-``` r
-[1] "14"
 ```
 
 ### Pregunta 4
@@ -284,25 +259,21 @@ de texto ".txt"?
 Para resolver esta pregunta creamos una columna en donde se almacenaran
 los valores de Bytes según se cumpla la condición
 
-``` r
+``` {r}
 epa_http$compa <- ifelse((str_detect(epa_http$IPs, ".edu")) == TRUE & (str_detect(epa_http$URL, ".txt")) == TRUE, epa_http$Bytes, NA )
 ```
 
 Cambiamos los valores NA a 0 para poder realizar la suma
 
-``` r
+``` {r}
 epa_http$compa[is.na(epa_http$compa)] <- 0
 ```
 
 Y finalmente sumamos todos los valores almacenados para encontrar el
 total de bytes transmitidos
 
-``` r
+``` {r}
 sum(epa_http$compa)
-```
-
-``` r
-[1] 3017871
 ```
 
 ### Pregunta 5
@@ -314,12 +285,8 @@ directamente la URL = "/"?
 Realizamos la sumatoria de todos los casos en los cuales la columna URL
 es igual "/" dado que que es a donde apunta la peticion.
 
-``` r
+``` {r}
 sum(str_equal("/",epa_http$URL))
-```
-
-``` r
-[1] 2382
 ```
 
 ### Pregunta 6
@@ -330,7 +297,7 @@ Protocolo) ¿Cuantas peticiones NO tienen como protocolo "HTTP/0.2"?
 Primero limpiamos la columna Protocolo y le eliminamos las dobles
 comillas
 
-``` r
+``` {r}
 epa_http$Protocolo <- str_replace(epa_http$Protocolo, "\"", "")
 ```
 
@@ -338,10 +305,6 @@ Realizamos la sumatoria de todas las peticiones donde no se uso el
 protocolo HTTP/0.2 en la columna protocolo se añade el parametro ! para
 que este tome todos los casos que sean diferentes al HTTP2.
 
-``` r
+``` {r}
 sum(!str_equal("HTTP/0.2",epa_http$Protocolo))
-```
-
-``` r
-[1] 47747
 ```

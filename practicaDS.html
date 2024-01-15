@@ -473,16 +473,34 @@ de servicios ilegítimos.</p></li>
 </div>
 <div id="introducción-a-r" class="section level2">
 <h2>Introducción a R</h2>
-<p>Antes de proceder a resolver las preguntas, primero cargamos el
-archivo haciendo uso del asistante visual de Rstudio, y con esta misma
-herramienta separamos los datos en columnas y filas, y cambiamos el
-formato de los datos a numérico en la ultima columna del documento
-cargado.</p>
-<p>Asignamos el nombre a las columnas con el siguiente código:</p>
-<pre class="r"><code>colnames (epa_http) &lt;- c(&quot;IPs&quot;, &quot;Timestamp&quot;, &quot;Tipo&quot;, &quot;URL&quot;, &quot;Protocolo&quot;, &quot;Código de respuesta&quot;, &quot;Bytes&quot;)</code></pre>
-<p>Instalamos los dos packages que usaremos:</p>
+<p>Instalamos y activamos los packages que usaremos:</p>
+<pre class="r"><code>library(tidyr)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>library(stringr)
 library(readr)</code></pre>
+<p>Antes de proceder a resolver las preguntas, primero cargamos el
+archivo</p>
+<pre class="r"><code>epa_http &lt;- read_table (&quot;~/Ciberseguridad/5 DataDriven/PRACTICAS/epa-http/epa-http.csv&quot;, col_names = FALSE, col_types = cols(X7 = col_number()))</code></pre>
+<pre><code>## Warning: 5331 parsing failures.
+## row col expected actual                                                            file
+##  11  X7 a number      - &#39;~/Ciberseguridad/5 DataDriven/PRACTICAS/epa-http/epa-http.csv&#39;
+##  14  X7 a number      - &#39;~/Ciberseguridad/5 DataDriven/PRACTICAS/epa-http/epa-http.csv&#39;
+##  20  X7 a number      - &#39;~/Ciberseguridad/5 DataDriven/PRACTICAS/epa-http/epa-http.csv&#39;
+##  24  X7 a number      - &#39;~/Ciberseguridad/5 DataDriven/PRACTICAS/epa-http/epa-http.csv&#39;
+##  36  X7 a number      - &#39;~/Ciberseguridad/5 DataDriven/PRACTICAS/epa-http/epa-http.csv&#39;
+## ... ... ........ ...... ...............................................................
+## See problems(...) for more details.</code></pre>
+<pre class="r"><code>View(epa_http)</code></pre>
+<p>Asignamos el nombre a las columnas con el siguiente código:</p>
+<pre class="r"><code>colnames (epa_http) &lt;- c(&quot;IPs&quot;, &quot;Timestamp&quot;, &quot;Tipo&quot;, &quot;URL&quot;, &quot;Protocolo&quot;, &quot;Código de respuesta&quot;, &quot;Bytes&quot;)</code></pre>
 <div id="pregunta-1-1" class="section level3">
 <h3>Pregunta 1</h3>
 <p>Una vez cargado el Dataset a analizar, comprobando que se cargan las
@@ -494,7 +512,7 @@ y columnas)?</p>
 <p>Hacemos uso de la función dim y nos devolverá el valor exacto de
 filas y columnas.</p>
 <pre class="r"><code>dim(epa_http)</code></pre>
-<pre class="r"><code>[1] 47748     7</code></pre></li>
+<pre><code>## [1] 47748     7</code></pre></li>
 <li><p>Valor medio de la columna Bytes</p>
 <p>Para poder realizar esta pregunta primero debemos asignar valores de
 0 a aquellas celdas que no tienen valores asignados en la columna
@@ -503,7 +521,7 @@ Bytes</p>
 <p>Después hacemos uso de la función mean y ya podemos obtener el valor
 medio.</p>
 <pre class="r"><code>mean (epa_http$Bytes)</code></pre>
-<pre class="r"><code>[1] 6531.457</code></pre></li>
+<pre><code>## [1] 6531.457</code></pre></li>
 </ol>
 </div>
 <div id="pregunta-2-1" class="section level3">
@@ -512,7 +530,7 @@ medio.</p>
 pertenecen a una IP claramente educativa (que contenga “.edu”)?</p>
 <p>Para resolver esta pregunta utilizamos la función str_detect</p>
 <pre class="r"><code>sum (str_detect (epa_http$IPs, &quot;.edu&quot;))</code></pre>
-<pre class="r"><code>[1] 6539</code></pre>
+<pre><code>## [1] 6539</code></pre>
 </div>
 <div id="pregunta-3" class="section level3">
 <h3>Pregunta 3</h3>
@@ -524,9 +542,11 @@ dato hora separamos los valores de Timestamp en varias columnas</p>
 <pre class="r"><code>epa_http &lt;- epa_http %&gt;% separate (Timestamp, paste0(&quot;Timestamp&quot;,1:4),sep=&#39;:&#39;)</code></pre>
 <p>Después eliminamos los corchetes en la columna Timestamp1 y
 Timestamp4 y de la columna Tipo eliminamos las dobles comillas</p>
-<pre class="r"><code>epa_http$Timestamp1 &lt;- str_replace( epa_http$Timestamp1, &quot;\\[&quot;, &quot;&quot;)</code></pre>
-<pre class="r"><code>epa_http$Timestamp4 &lt;- str_replace( epa_http$Timestamp4, &quot;\\]&quot;, &quot;&quot;)</code></pre>
-<pre class="r"><code>epa_http$Tipo &lt;- str_replace (epa_http$Tipo, &quot;\&quot;&quot;, &quot;&quot;)</code></pre>
+<pre class="r"><code>epa_http$Timestamp1 &lt;- str_replace( epa_http$Timestamp1, &quot;\\[&quot;, &quot;&quot;)
+
+epa_http$Timestamp4 &lt;- str_replace( epa_http$Timestamp4, &quot;\\]&quot;, &quot;&quot;)
+
+epa_http$Tipo &lt;- str_replace (epa_http$Tipo, &quot;\&quot;&quot;, &quot;&quot;)</code></pre>
 <p>Creamos una condición que cumpla que si la petición es de tipo GET
 almacene la hora en una nueva columna llamada Phoras.</p>
 <pre class="r"><code>epa_http$Phoras &lt;- ifelse (str_equal (&quot;GET&quot;, epa_http$Tipo) == TRUE, epa_http$Timestamp2, NA )</code></pre>
@@ -537,7 +557,7 @@ conteo de cuantas peticiones por hora se hacen</p>
 mayor volumen de peticiones se hace</p>
 <pre class="r"><code>Qhora &lt;- copy_epa$Phoras [which.max (copy_epa$n)] 
 print(Qhora)</code></pre>
-<pre class="r"><code>[1] &quot;14&quot;</code></pre>
+<pre><code>## [1] &quot;14&quot;</code></pre>
 </div>
 <div id="pregunta-4" class="section level3">
 <h3>Pregunta 4</h3>
@@ -552,7 +572,7 @@ almacenaran los valores de Bytes según se cumpla la condición</p>
 <p>Y finalmente sumamos todos los valores almacenados para encontrar el
 total de bytes transmitidos</p>
 <pre class="r"><code>sum(epa_http$compa)</code></pre>
-<pre class="r"><code>[1] 3017871</code></pre>
+<pre><code>## [1] 3017871</code></pre>
 </div>
 <div id="pregunta-5" class="section level3">
 <h3>Pregunta 5</h3>
@@ -562,7 +582,7 @@ directamente la URL = “/”?</p>
 <p>Realizamos la sumatoria de todos los casos en los cuales la columna
 URL es igual “/” dado que que es a donde apunta la peticion.</p>
 <pre class="r"><code>sum(str_equal(&quot;/&quot;,epa_http$URL))</code></pre>
-<pre class="r"><code>[1] 2382</code></pre>
+<pre><code>## [1] 2382</code></pre>
 </div>
 <div id="pregunta-6" class="section level3">
 <h3>Pregunta 6</h3>
@@ -575,6 +595,7 @@ comillas</p>
 protocolo HTTP/0.2 en la columna protocolo se añade el parametro ! para
 que este tome todos los casos que sean diferentes al HTTP2.</p>
 <pre class="r"><code>sum(!str_equal(&quot;HTTP/0.2&quot;,epa_http$Protocolo))</code></pre>
+<pre><code>## [1] 47747</code></pre>
 </div>
 </div>
 
