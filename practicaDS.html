@@ -467,19 +467,19 @@ cargado.</p>
 <p>Una vez cargado el Dataset a analizar, comprobando que se cargan las
 IPs, el Timestamp, la Petición (Tipo, URL y Protocolo), Código de
 respuesta, y Bytes de reply.</p>
-<p>Para responder el literal 1 y 2, haremos uso de funciones, para el
-literal 1 la función dim y para el literal 2 la funcion mean.</p>
 <ol style="list-style-type: decimal">
 <li><p>¿Cuáles son las dimensiones del dataset cargado (número de filas
 y columnas)?</p>
+<p>Hacemos uso de la función dim y nos devolverá el valor exacto de
+filas y columnas.</p>
 <pre class="r"><code>dim(epa_http)</code></pre>
-<p>Existen 47748 columnas y 7 filas</p></li>
-<li><p>Valor medio de la columna Bytes</p>
+<pre class="r"><code>[1] 47748     7</code></pre></li>
+<li><p>alor medio de la columna Bytes</p>
 <p>Para poder realizar esta pregunta primero debemos asignar valores de
 0 a aquellas celdas que no tienen valores asignados en la columna
 Bytes</p>
 <pre class="r"><code>epa_http2$Bytes[ is.na (epa_http2$Bytes)] &lt;- 0</code></pre>
-<p>Después hacemos uso de la función y ya podemos obtener el valor
+<p>Después hacemos uso de la función mean y ya podemos obtener el valor
 medio.</p>
 <pre class="r"><code>mean(epa_http$Bytes)</code></pre>
 <p>El valor medio es de 6531.457</p></li>
@@ -489,8 +489,9 @@ medio.</p>
 <h3>Pregunta 2</h3>
 <p>De las diferentes IPs de origen accediendo al servidor, ¿Cuántas
 pertenecen a una IP claramente educativa (que contenga “.edu”)?</p>
-<pre><code>&gt; sum(str_detect(epa_http$IPs, &quot;.edu&quot;))
-[1] 6539</code></pre>
+<p>Para resolver esta pregunta utilizamos la función str_detect</p>
+<pre class="r"><code>&gt; sum (str_detect(epa_http$IPs, &quot;.edu&quot;))</code></pre>
+<p>6539</p>
 </div>
 <div id="pregunta-3" class="section level3">
 <h3>Pregunta 3</h3>

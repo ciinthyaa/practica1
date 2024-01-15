@@ -134,45 +134,54 @@ Una vez cargado el Dataset a analizar, comprobando que se cargan las
 IPs, el Timestamp, la Petición (Tipo, URL y Protocolo), Código de
 respuesta, y Bytes de reply.
 
-Para responder el literal 1 y 2, haremos uso de funciones, para el
-literal 1 la función dim y para el literal 2 la funcion mean.
-
 1.  ¿Cuáles son las dimensiones del dataset cargado (número de filas y
     columnas)?
+
+    Hacemos uso de la función dim y nos devolverá el valor exacto de
+    filas y columnas.
 
     ``` r
     dim(epa_http)
     ```
 
-    Existen 47748 columnas y 7 filas
+    ``` r
+    [1] 47748     7
+    ```
 
-2.  Valor medio de la columna Bytes
+2.  alor medio de la columna Bytes
 
     Para poder realizar esta pregunta primero debemos asignar valores de
     0 a aquellas celdas que no tienen valores asignados en la columna
     Bytes
 
     ``` r
-    epa_http2$Bytes[ is.na (epa_http2$Bytes)] <- 0
+    epa_http$Bytes[ is.na (epa_http$Bytes)] <- 0
     ```
 
-    Después hacemos uso de la función y ya podemos obtener el valor
+    Después hacemos uso de la función mean y ya podemos obtener el valor
     medio.
 
     ``` r
     mean(epa_http$Bytes)
     ```
 
-    El valor medio es de 6531.457
+    ``` r
+    [1] 6531.457
+    ```
 
 ### Pregunta 2
 
 De las diferentes IPs de origen accediendo al servidor, ¿Cuántas
 pertenecen a una IP claramente educativa (que contenga ".edu")?
 
-```         
-> sum(str_detect(epa_http$IPs, ".edu"))
-[1] 6539
+Para resolver esta pregunta utilizamos la función str_detect
+
+``` r
+sum (str_detect(epa_http$IPs, ".edu"))
+```
+
+``` r
+6539
 ```
 
 ### Pregunta 3
