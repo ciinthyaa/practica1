@@ -286,6 +286,13 @@ sum(str_equal("/",epa_http$URL))
 Aprovechando que hemos separado la petición en 3 partes (Tipo, URL,
 Protocolo) ¿Cuantas peticiones NO tienen como protocolo "HTTP/0.2"?
 
+Primero limpiamos la columna Protocolo y le eliminamos las dobles
+comillas
+
+``` r
+epa_http$Protocolo <- str_replace(epa_http$Protocolo, "\"", "")
+```
+
 Realizamos la sumatoria de todas las peticiones donde no se uso el
 protocolo HTTP/0.2 en la columna protocolo se añade el parametro ! para
 que este tome todos los casos que sean diferentes al HTTP2.

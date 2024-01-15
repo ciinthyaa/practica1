@@ -546,6 +546,9 @@ URL es igual “/” dado que que es a donde apunta la peticion.</p>
 <h3>Pregunta 6</h3>
 <p>Aprovechando que hemos separado la petición en 3 partes (Tipo, URL,
 Protocolo) ¿Cuantas peticiones NO tienen como protocolo “HTTP/0.2”?</p>
+<p>Primero limpiamos la columna Protocolo y le eliminamos las dobles
+comillas</p>
+<pre class="r"><code>epa_http$Protocolo &lt;- str_replace(epa_http$Protocolo, &quot;\&quot;&quot;, &quot;&quot;)</code></pre>
 <p>Realizamos la sumatoria de todas las peticiones donde no se uso el
 protocolo HTTP/0.2 en la columna protocolo se añade el parametro ! para
 que este tome todos los casos que sean diferentes al HTTP2.</p>
